@@ -1,6 +1,11 @@
-// This is a JavaScript module that is loaded on demand. It can export any number of
-// functions, and may import other JavaScript modules if required.
+window.abDatepickerBlazor = {
+    init: function (elementId, settings, dotnetHelper) {
+        var elem = document.getElementById(elementId);
+        if (!elem) {
+            throw new Error('No element with ID ' + elementId);
+        }
+        console.log('settings', settings);
 
-export function showPrompt(message) {
-  return prompt(message, 'Type anything here');
+        $(elem).datepicker(settings);
+    }
 }

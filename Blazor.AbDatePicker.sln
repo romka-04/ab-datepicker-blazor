@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.AbDatePicker.Demo", "Code\Blazor.AbDatePicker.Demo\Blazor.AbDatePicker.Demo.csproj", "{60988AF0-D95B-498D-8BC0-D1B1969CEF8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.AbDatePicker", "Code\Blazor.AbDatePicker\Blazor.AbDatePicker.csproj", "{E401979F-CA6D-4FED-A9BB-515802971718}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.AbDatePicker", "Code\Blazor.AbDatePicker\Blazor.AbDatePicker.csproj", "{E401979F-CA6D-4FED-A9BB-515802971718}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

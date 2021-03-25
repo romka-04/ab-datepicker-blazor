@@ -1,5 +1,51 @@
-﻿<h3>AbDatepicker</h3>
+﻿@using Microsoft.JSInterop
+@inject IJSRuntime js
+
+<div class="input-group mb-3">
+    <input class="form-control" id="@_elementId" type="text" placeholder="" title="format : " />
+    <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button">
+            <i class="far fa-calendar-alt"></i>
+        </button>
+    </div>
+</div>
 
 @code {
-    
+    readonly string _elementId = $"date-{Guid.NewGuid():D}";
+
+    [Parameter]
+    public DateTime Value { get; set; }
+    [Parameter]
+    public AdDatepickerOptions Options { get; set; } = new AdDatepickerOptions();
+    [Parameter]
+    public EventCallback<DateTime> Changed { get; set; }
+
+    private bool _initialized = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await CreateOrUpdateDatePickerAsync();
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (_initialized)
+        {
+            await CreateOrUpdateDatePickerAsync();
+        }
+
+        await base.OnParametersSetAsync();
+    }
+
+    private async Task CreateOrUpdateDatePickerAsync()
+    {
+        await js.InvokeAsync<object>(
+            "abDatepickerBlazor.init",
+            _elementId, Options, DotNetObjectReference.Create(this));
+    }
+
 }

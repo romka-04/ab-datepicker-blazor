@@ -12,4 +12,8 @@
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Blazor.AbDatePicker\Blazor.AbDatePicker.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Blazor.AbDatePicker
 {
@@ -9,8 +10,8 @@ namespace Blazor.AbDatePicker
         public WeekDayFormat WeekDayFormat { get; set; }
         public DayOfWeek FirstDayOfWeek { get; set; }
         public DayOfWeek[] DisabledDayOfWeek { get; set; }
-        public string InputFormats { get; set; }
-        public string OutputFormat { get; set; }
+        public string InputFormats { get; set; } = "dd-MM-yyyy";
+        public string OutputFormat { get; set; } = "dd-MM-yyyy";
         public DateTime? MinDate { get; set; }
         public DateTime? MaxDate { get; set; }
         public bool Modal { get; set; }
@@ -18,6 +19,7 @@ namespace Blazor.AbDatePicker
         public bool Disable { get; set; }
     }
 
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum Theme
     {
         Default,
