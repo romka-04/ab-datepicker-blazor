@@ -1,0 +1,103 @@
+﻿@typeparam TItem
+@inject IJSRuntime jsRuntime
+
+<select id="@_uniqueId" class="@ClassNames" multiple="@Multiple" size="@Size" title="@Title" @onchange="OnChange">
+    <CascadingValue name="Dropdown" Value="@this">
+        @ChildContent
+    </CascadingValue>
+</select>
+
+@code {
+
+    #region Parameters
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public List<TItem> Value { get; set; }
+
+    [Parameter]
+    public EventCallback<List<TItem>> ValueChanged { get; set; }
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public bool Multiple { get; set; }
+
+    [Parameter]
+    public int Size { get; set; } = 3;
+
+    [Parameter]
+    public string ClassNames { get; set; }
+
+    [Parameter]
+    public Func<object, TItem> ChangeType { get; set; } = ConvertByType<TItem>;
+
+    #endregion
+
+    private string _uniqueId = $"SelectListID-{Guid.NewGuid():N}";
+
+    private static T ConvertByType<T>(object obj)
+    {
+        Console.WriteLine($"ConvertByType:{obj}");
+        if (obj is T)
+        {
+            return (T)obj;
+        }
+
+        try
+        {
+            return (T)Convert.ChangeType(obj, typeof(T));
+        }
+        catch (InvalidCastException ex)
+        {
+            Console.WriteLine(ex);
+            return default(T);
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await jsRuntime.InvokeAsync<object>("dropdown.custom_select", _uniqueId, String.Join(",", Value), Multiple);
+        }
+    }
+
+    public void OnChange(ChangeEventArgs e)
+    {
+        jsRuntime.InvokeVoidAsync("dropdown.onOptionSelect", DotNetObjectReference.Create(this), _uniqueId);
+    }
+
+    [JSInvokable]
+    public async Task<bool> OnOptionSelect(string selectId, List<string> selectedValues)
+    {
+        try
+        {
+            if (Value != null)
+            {
+                Value.Clear();
+                Value.AddRange(selectedValues.Select(ChangeType));
+            }
+            else
+            {
+                Value = new List<TItem>(selectedValues.Select(ChangeType));
+            }
+
+            await ValueChanged.InvokeAsync(Value);
+
+            StateHasChanged();
+
+            return true;
+        }
+        catch
+        {
+            return true;
+        }
+    }
+
+}
+
+

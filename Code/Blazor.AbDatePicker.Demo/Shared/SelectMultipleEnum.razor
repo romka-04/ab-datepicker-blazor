@@ -1,0 +1,8 @@
+﻿@typeparam TItem
+
+<SelectMultiple Value="Value" Multiple="@Multiple" Title="@Title" ClassNames="@ClassNames" ChangeType="@ChangeType" ValueChanged="ValueChanged">
+    @foreach (TItem item in Enum.GetValues(typeof(TItem)).Cast<TItem>())
+    {
+        <option value="@item.ToString()">@item.ToString()</option>
+    }
+</SelectMultiple>

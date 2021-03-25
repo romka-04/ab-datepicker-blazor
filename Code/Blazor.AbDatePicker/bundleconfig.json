@@ -1,0 +1,9 @@
+[
+  {
+    "outputFileName": "wwwroot/datepicker-blazor.min.js",
+    "inputFiles": [
+      "wwwroot/datepicker.js",
+      "wwwroot/datepicker-blazor.js"
+    ]
+  }
+]

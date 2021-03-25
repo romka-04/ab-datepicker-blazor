@@ -1,0 +1,31 @@
+﻿<pre id="@_elementId" class="code"><code class="@Language">
+@ChildContent
+</code></pre>
+
+@code {
+    private readonly string _elementId = $"codesnippt-{Guid.NewGuid():D}";
+    private bool _initialized = false;
+
+    [Inject] private IJSRuntime _js { get; set; }
+
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public string Language { get; set; } = "csharp";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await _js.InvokeVoidAsync("highlightSnippet.init");
+            _initialized = true;
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (_initialized)
+        {
+            await _js.InvokeVoidAsync("highlightSnippet.change", _elementId);
+        }
+    }
+
+}

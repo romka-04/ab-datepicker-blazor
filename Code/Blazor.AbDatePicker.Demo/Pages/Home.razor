@@ -1,0 +1,198 @@
+﻿@page "/"
+@using System.Text.Json
+@using DayOfWeek = Blazor.AbDatePicker.DayOfWeek
+
+<br />
+<div class="row">
+    <div class="col-md-6">
+        <h3>Datepicker</h3>
+        <br/>
+        <div class="row">
+            <div class="form-group col-sm-10">
+                <label class="col-form-label">Date:</label>
+                <AbDatepicker @bind-Value="SampleDate" Options="Options"></AbDatepicker>
+                <div id="date-inline"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-10">
+                <label class="col-form-label">Selected Date:</label>
+                <span class="alert alert-success">@SampleDate.Value.ToShortDateString()</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <label class="col-form-label">Scripts:</label>
+                <CodeSnippet Language="cshtml-razor">&lt;link rel=&quot;stylesheet&quot; href=&quot;_content/Blazor.AbDatePicker/css/datepicker.css&quot; type=&quot;text/css&quot;/&gt;
+&lt;script src=&quot;_content/Blazor.AbDatePicker/datepicker-blazor.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;AbDatepicker @@bind-Value=&quot;SampleDate&quot; Options=&quot;_options&quot;&gt;&lt;/AbDatepicker&gt;
+
+@@code {
+    private DateTime? SampleDate { get; set; } = DateTime.Now.Date.AddDays(-7);
+
+    private AdDatepickerOptions _options = new AdDatepickerOptions
+    {
+    // customize options here
+    };
+}
+                </CodeSnippet>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-8">
+                <label class="col-form-label">Locales:</label>
+                <Locales @bind-Value="_locale"></Locales>
+                <code>@_locale</code>
+            </div>
+            <div class="form-group col-sm-12">
+                <CodeSnippet Language="cshtml-razor">&lt;!--Specify this when you need other then 'en' locale.--&gt;
+&lt;script src=&quot;_content/Blazor.AbDatePicker/locales/@(_locale).js&quot;&gt;&lt;/script&gt;
+                </CodeSnippet>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h3>Options</h3>
+        <br />
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <label class="col-form-label">Themes:</label>
+                <select @bind="Options.Theme" class="form-control">
+                    @foreach (var item in Enum.GetValues(typeof(Theme)))
+                    {
+                        <option value="@item">@item</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group col-sm-6">
+                <label class="col-form-label">Start view:</label>
+                <select @bind="Options.StartView" class="form-control">
+                    @foreach (var item in Enum.GetValues(typeof(StartView)))
+                    {
+                        <option value="@item">@item</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group col-sm-12">
+                <label class="col-form-label">Week Day Format:</label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="date-options-weekdayformat-narrow" value="@WeekDayFormat.Narrow" @onchange="WeekDayFormatChanged" checked>
+                    <label class="form-check-label" for="date-options-weekdayformat-narrow">
+                        narrow
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="date-options-weekdayformat-short" value="@WeekDayFormat.Short" @onchange="WeekDayFormatChanged">
+                    <label class="form-check-label" for="date-options-weekdayformat-short">
+                        short
+                    </label>
+                </div>
+            </div>
+            <div class="form-group col-sm-6">
+                <label class="col-form-label">First day of week:</label>
+                <select @bind="Options.FirstDayOfWeek" class="form-control">
+                    @foreach (var item in Enum.GetValues(typeof(DayOfWeek)))
+                    {
+                        <option value="@item">@item</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group col-sm-6">
+                <label class="col-form-label">Days of week disabled:</label>
+                <SelectMultipleEnum @bind-Value="Options.DisabledDayOfWeek" Multiple="true" Title="Days of week disabled" ClassNames="form-control" />
+            </div>
+            <div class="form-group col-sm-6">
+                <label class="col-form-label">Input formats:</label>
+                <SelectMultiple @bind-Value="Options.InputFormats" Multiple="true" Title="Input formats" ClassNames="form-control">
+                    <option value="dd-MM-yyyy" selected="selected">dd-MM-yyyy</option>
+                    <option value="M/d/y">M/d/y</option>
+                    <option value="M-d-y">M-d-y</option>
+                    <option value="yyyy-MM-dd">yyyy-MM-dd</option>
+                    <option value="yyyy/MM/dd">yyyy/MM/dd</option>
+                    <option value="d/M/y">d/M/y</option>
+                    <option value="d-M-y">d-M-y</option>
+                    <option value="d.M.y">d.M.y</option>
+                    <option value="ddMMy">ddMMy</option>
+                    <option value="yyyy.MM.dd">yyyy.MM.dd</option>
+                </SelectMultiple>
+            </div>
+            <div class="form-group col-sm-6">
+                <label class="col-form-label">Output format:</label>
+                <select @bind="Options.OutputFormat" class="form-control" title="Output format" size="3">
+                    <option value="dd-MM-yyyy" selected="selected">dd-MM-yyyy</option>
+                    <option value="M/d/y">M/d/y</option>
+                    <option value="M-d-y">M-d-y</option>
+                    <option value="yyyy-MM-dd">yyyy-MM-dd</option>
+                    <option value="yyyy/MM/dd">yyyy/MM/dd</option>
+                    <option value="d/M/y">d/M/y</option>
+                    <option value="d-M-y">d-M-y</option>
+                    <option value="d.M.y">d.M.y</option>
+                    <option value="ddMMy">ddMMy</option>
+                    <option value="yyyy.MM.dd">yyyy.MM.dd</option>
+                </select>
+            </div>
+            <div class="form-group col-sm-6">
+                <label class="col-form-label">Min date:</label>
+                <input @bind="Options.MinDate" id="date-options-min" name="date-options-min" class="form-control" type="date">
+            </div>
+            <div class="form-group col-sm-6">
+                <label class="col-form-label">Max date:</label>
+                <input @bind="Options.MaxDate" id="date-options-max" name="date-options-max" class="form-control" type="date">
+            </div>
+            <div class="form-group form-check col-sm-4">
+                <input @bind="Options.Modal" type="checkbox" class="form-check-input" id="date-options-modal-label">
+                <label class="form-check-label" for="date-options-modal-label">Modal</label>
+            </div>
+            <div class="form-group form-check col-sm-4">
+                <input @onchange="InlineChanged" type="checkbox" class="form-check-input" id="date-options-inline-label">
+                <label class="form-check-label" for="date-options-inline-label">Inline</label>
+            </div>
+            <div class="form-group form-check col-sm-4">
+                <input @bind="Options.Disable" type="checkbox" class="form-check-input" id="date-options-disable-label">
+                <label class="form-check-label" for="date-options-disable-label">Disable</label>
+            </div>
+        </div>
+        <hr />
+        <div class="form-group col-sm-8">
+            <label class="col-form-label">Json:</label>
+            <code>
+                @JsonSerializer.Serialize(Options, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, })
+            </code>
+        </div>
+    </div>
+
+</div>
+
+@code {
+
+    private DateTime? SampleDate { get; set; } = DateTime.Now.Date.AddDays(-7);
+    private AdDatepickerOptions Options { get; set; } = new AdDatepickerOptions();
+
+    private string _locale = "en";
+
+    private void OnTest()
+    {
+        Console.WriteLine(string.Join("; ", Options.DisabledDayOfWeek.Select(x => x.ToString("G"))));
+    }
+
+    private void WeekDayFormatChanged(ChangeEventArgs args)
+    {
+        if (Enum.TryParse(args.Value?.ToString(), out WeekDayFormat res))
+        {
+            Options.WeekDayFormat = res;
+        }
+    }
+
+    private void InlineChanged(ChangeEventArgs args)
+    {
+        if (bool.TryParse(args.Value?.ToString(), out bool res) && res)
+        {
+            Options.Inline = "date-inline";
+        }
+        else
+        {
+            Options.SetInlineDefault();
+        }
+    }
+}

@@ -1,0 +1,129 @@
+﻿<select value="@Value" @onchange="OnTest" id="date-options-locales" class="form-control" title="Some Languages">
+    <option value="ar-DZ">Arabic - Algeria</option>
+    <option value="ar-BH">Arabic - Bahrain</option>
+    <option value="ar-EG">Arabic - Egypt</option>
+    <option value="ar-IQ">Arabic - Iraq</option>
+    <option value="ar-JO">Arabic - Jordan</option>
+    <option value="ar-KW">Arabic - Kuwait</option>
+    <option value="ar-LB">Arabic - Lebanon</option>
+    <option value="ar-LY">Arabic - Libya</option>
+    <option value="ar-MA">Arabic - Morocco</option>
+    <option value="ar-OM">Arabic - Oman</option>
+    <option value="ar-QA">Arabic - Qatar</option>
+    <option value="ar-SA">Arabic - Saudi Arabia</option>
+    <option value="ar-SY">Arabic - Syria</option>
+    <option value="ar-TN">Arabic - Tunisia</option>
+    <option value="ar-AE">Arabic - United Arab Emirates</option>
+    <option value="ar-YE">Arabic - Yemen</option>
+    <option value="bg">Bulgarian - Bulgaria</option>
+    <option value="ca-ES-VALENCIA">Catalan - Catalan</option>
+    <option value="zh">Chinese - China</option>
+    <option value="hr">Croatian - Croatia</option>
+    <option value="cs">Czech - Czech Republic</option>
+    <option value="da">Danish - Denmark</option>
+    <option value="nl-BE">Dutch - Belgium</option>
+    <option value="nl">Dutch - The Netherlands</option>
+    <option value="en-AU">English - Australia</option>
+    <option value="en-BZ">English - Belize</option>
+    <option value="en-CA">English - Canada</option>
+    <option value="en-IE">English - Ireland</option>
+    <option value="en-JM">English - Jamaica</option>
+    <option value="en-NZ">English - New Zealand</option>
+    <option value="en-PH">English - Philippines</option>
+    <option value="en-ZA">English - South Africa</option>
+    <option value="en-TT">English - Trinidad and Tobago</option>
+    <option value="en" selected="selected">English - United Kingdom</option>
+    <option value="en-US-POSIX">English - United States</option>
+    <option value="en-ZW">English - Zimbabwe</option>
+    <option value="et">Estonian - Estonia</option>
+    <option value="fi">Finnish - Finland</option>
+    <option value="fr-BE">French - Belgium</option>
+    <option value="fr-CA">French - Canada</option>
+    <option value="fr">French - France</option>
+    <option value="fr-LU">French - Luxembourg</option>
+    <option value="fr-MC">French - Monaco</option>
+    <option value="fr-CH">French - Switzerland</option>
+    <option value="gl">Galician - Galician</option>
+    <option value="de-AT">German - Austria</option>
+    <option value="de">German - Germany</option>
+    <option value="de-LI">German - Liechtenstein</option>
+    <option value="de-LU">German - Luxembourg</option>
+    <option value="de-CH">German - Switzerland</option>
+    <option value="el">Greek - Greece</option>
+    <option value="gu">Gujarati - India</option>
+    <option value="he">Hebrew - Israel</option>
+    <option value="hi">Hindi - India</option>
+    <option value="hu">Hungarian - Hungary</option>
+    <option value="is">Icelandic - Iceland</option>
+    <option value="it">Italian - Italy</option>
+    <option value="it-CH">Italian - Switzerland</option>
+    <option value="ja">Japanese - Japan</option>
+    <option value="kn">Kannada - India</option>
+    <option value="kk">Kazakh - Kazakhstan</option>
+    <option value="ky">Kyrgyz - Kazakhstan</option>
+    <option value="lv">Latvian - Latvia</option>
+    <option value="lt">Lithuanian - Lithuania</option>
+    <option value="mk">Macedonian (FYROM)</option>
+    <option value="mr">Marathi - India</option>
+    <option value="mn">Mongolian - Mongolia</option>
+    <option value="nb">Norwegian (Bokmål) - Norway</option>
+    <option value="pl">Polish - Poland</option>
+    <option value="pt">Portuguese - Portugal</option>
+    <option value="pa">Punjabi - India</option>
+    <option value="ro">Romanian - Romania</option>
+    <option value="ru">Russian - Russia</option>
+    <option value="sr-Cyrl">Serbian (Cyrillic) - Serbia</option>
+    <option value="sr-Latn">Serbian (Latin) - Serbia</option>
+    <option value="sk">Slovak - Slovakia</option>
+    <option value="sl">Slovenian - Slovenia</option>
+    <option value="es-AR">Spanish - Argentina</option>
+    <option value="es-BO">Spanish - Bolivia</option>
+    <option value="es-CL">Spanish - Chile</option>
+    <option value="es-CO">Spanish - Colombia</option>
+    <option value="es-CR">Spanish - Costa Rica</option>
+    <option value="es-DO">Spanish - Dominican Republic</option>
+    <option value="es-EC">Spanish - Ecuador</option>
+    <option value="es-SV">Spanish - El Salvador</option>
+    <option value="es-GT">Spanish - Guatemala</option>
+    <option value="es-HN">Spanish - Honduras</option>
+    <option value="es-MX">Spanish - Mexico</option>
+    <option value="es-NI">Spanish - Nicaragua</option>
+    <option value="es-PA">Spanish - Panama</option>
+    <option value="es-PY">Spanish - Paraguay</option>
+    <option value="es-PE">Spanish - Peru</option>
+    <option value="es-PR">Spanish - Puerto Rico</option>
+    <option value="es">Spanish - Spain</option>
+    <option value="es-UY">Spanish - Uruguay</option>
+    <option value="es-VE">Spanish - Venezuela</option>
+    <option value="sw-KE">Swahili - Kenya</option>
+    <option value="sv-FI">Swedish - Finland</option>
+    <option value="sv">Swedish - Sweden</option>
+    <option value="ta">Tamil - India</option>
+    <option value="te">Telugu - India</option>
+    <option value="th">Thai - Thailand</option>
+    <option value="tr">Turkish - Turkey</option>
+    <option value="uk">Ukrainian - Ukraine</option>
+    <option value="ur">Urdu - Pakistan</option>
+    <option value="uz">Uzbek - Uzbekistan</option>
+    <option value="uz-Latn">Uzbek (Latin) - Uzbekistan</option>
+    <option value="vi">Vietnamese - Vietnam</option>
+</select>
+
+@code {
+    [Parameter]
+    public string Value { get; set; }
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+
+    //private async Task OnValueChanged(ChangeEventArgs args)
+    //{
+    //    Console.WriteLine(args.Value);
+    //    Console.WriteLine(Value);
+    //    await ValueChanged.InvokeAsync(Value);
+    //}
+    private async Task OnTest(ChangeEventArgs args)
+    {
+        Value = args.Value?.ToString();
+        await ValueChanged.InvokeAsync(Value);
+    }
+}
