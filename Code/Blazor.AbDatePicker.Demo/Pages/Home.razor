@@ -11,13 +11,13 @@
             <div class="form-group ">
                 <label class="col-form-label">
                     Date (English - United Kingdom):
-                    <AbDatepicker Value="Date" Options="Options"></AbDatepicker>
+                    <AbDatepicker @bind-Value="Date" Options="Options"></AbDatepicker>
                 </label>
             </div>
             <div class="form-group ">
                 <label class="col-form-label">
                     Selected Date:
-                    <span class="alert alert-success">@Date.ToShortDateString()</span>
+                    <span class="alert alert-success">@Date.Value.ToShortDateString()</span>
                 </label>
             </div>
         </div>
@@ -85,7 +85,7 @@
 
 @code {
 
-    private DateTime Date { get; set; } = DateTime.Now.Date.AddDays(-7);
+    private DateTime? Date { get; set; } = DateTime.Now.Date.AddDays(-7);
     private AdDatepickerOptions Options { get; set; } = new AdDatepickerOptions();
 
 

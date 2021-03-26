@@ -11,7 +11,7 @@
     [Parameter]
     public AdDatepickerOptions Options { get; set; } = new AdDatepickerOptions();
     [Parameter]
-    public EventCallback<DateTime> Changed { get; set; }
+    public EventCallback<DateTime?> ValueChanged { get; set; }
 
     private bool _initialized = false;
 
@@ -19,7 +19,7 @@
     {
         if (firstRender)
         {
-            var initDate = Value?.ToString("O"); 
+            var initDate = Value?.ToString("O");
             await js.InvokeAsync<object>(
                 "abDatepickerBlazor.init",
                 _elementId, Options, initDate, DotNetObjectReference.Create(this));
@@ -41,4 +41,13 @@
         await base.OnParametersSetAsync();
     }
 
+    [JSInvokable]
+    public async Task OnChangeAsync(DateTime? oldVal, DateTime? newVal)
+    {
+        if (oldVal != newVal)
+        {
+            Value = newVal;
+            await ValueChanged.InvokeAsync(Value);
+        }
+    }
 }
