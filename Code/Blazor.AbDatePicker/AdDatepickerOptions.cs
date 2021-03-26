@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace Blazor.AbDatePicker
@@ -17,15 +18,21 @@ namespace Blazor.AbDatePicker
         public bool Modal { get; set; }
         public bool Inline { get; set; }
         public bool Disable { get; set; }
+        public string Markup { get; } = "bootstrap4";
     }
 
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(CustomJsonStringEnumConverter))]
     public enum Theme
     {
+        [EnumMember(Value = "default")]
         Default,
+        [EnumMember(Value = "bootstrap")]
         Bootstrap,
+        [EnumMember(Value = "blue")]
         Blue,
+        [EnumMember(Value = "green")]
         Green,
+        [EnumMember(Value = "marron")]
         // ReSharper disable once UnusedMember.Global
         Marron
     }

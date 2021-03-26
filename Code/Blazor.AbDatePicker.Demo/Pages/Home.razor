@@ -1,42 +1,83 @@
 ﻿@page "/"
 @using System.Text.Json
+@using DayOfWeek = Blazor.AbDatePicker.DayOfWeek
 
 <br/>
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-4">
         <h3>Datepicker</h3>
         <br/>
         <div class="row">
-            <div class="form-group col-sm-8">
+            <div class="form-group ">
                 <label class="col-form-label">
                     Date (English - United Kingdom):
                     <AbDatepicker Value="Date" Options="Options"></AbDatepicker>
                 </label>
             </div>
-            <div class="form-group col-sm-8">
-                <code>
-                    @JsonSerializer.Serialize(Options, new JsonSerializerOptions{ PropertyNamingPolicy = JsonNamingPolicy.CamelCase, })
-                </code>
+            <div class="form-group ">
+                <label class="col-form-label">
+                    Selected Date:
+                    <span class="alert alert-success">@Date.ToShortDateString()</span>
+                </label>
             </div>
         </div>
         <br/>
-        <p>@Date.ToShortDateString()</p>
     </div>
-    <div class="col-md-4">
-        <h3> Options</h3>
+    <div class="col-md-8">
+        <h3>Options</h3>
+        <br/>
         <div class="row">
-            <div class="form-group">
+            <div class="form-group col-sm-6">
+                <label class="col-form-label">Themes:</label>
+                <select @bind="Options.Theme" class="form-control">
+                    @foreach (var ffe in Enum.GetValues(typeof(Theme)))
+                    {
+                        <option value="@ffe">@ffe</option>
+                    }
+                </select>              
+            </div>
+            <div class="form-group col-sm-6">
+                <label class="col-form-label">Start view:</label>
+                <select @bind="Options.StartView" class="form-control">
+                    @foreach (var ffe in Enum.GetValues(typeof(StartView)))
+                    {
+                        <option value="@ffe">@ffe</option>
+                    }
+                </select>              
+            </div>
+            <div class="form-group col-sm-12">
                 <label class="col-form-label">
-                    Themes:
-                    <select @bind="Options.Theme" 
-                             class="form-control">
-                        @foreach (var ffe in Enum.GetValues(typeof(Theme)))
+                    weekDayFormat:
+                    two check boxes
+                </label>
+            </div>
+            <div class="form-group col-sm-6">
+                <label class="col-form-label">First day of week:</label>
+                <select @bind="Options.FirstDayOfWeek" class="form-control">
+                    @foreach (var ffe in Enum.GetValues(typeof(DayOfWeek)))
+                    {
+                        <option value="@ffe">@ffe</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group col-sm-6">
+                <label class="col-form-label">
+                    Days of week disabled:
+                    @*<select @bind="Options.DisabledDayOfWeek" class="form-control">
+                        @foreach (var ffe in Enum.GetValues(typeof(DayOfWeek)))
                         {
                             <option value="@ffe">@ffe</option>
                         }
-                    </select>              
-                    </label>
+                    </select>*@
+                </label>
             </div>
+        </div>
+        <hr/>
+        <div class="form-group col-sm-8">
+            <label class="col-form-label">Json:</label>
+            <code>
+                @JsonSerializer.Serialize(Options, new JsonSerializerOptions{ PropertyNamingPolicy = JsonNamingPolicy.CamelCase, })
+            </code>
         </div>
     </div>
 
@@ -44,7 +85,7 @@
 
 @code {
 
-    private DateTime Date { get; set; } = DateTime.Now.Date;
+    private DateTime Date { get; set; } = DateTime.Now.Date.AddDays(-7);
     private AdDatepickerOptions Options { get; set; } = new AdDatepickerOptions();
 
 

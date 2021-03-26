@@ -1,20 +1,13 @@
 ﻿@using Microsoft.JSInterop
 @inject IJSRuntime js
 
-<div class="input-group mb-3">
-    <input class="form-control" id="@_elementId" type="text" placeholder="" title="format : " />
-    <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button">
-            <i class="far fa-calendar-alt"></i>
-        </button>
-    </div>
-</div>
+<input class="form-control" id="@_elementId" type="text" placeholder="@Options.InputFormats" />
 
 @code {
     readonly string _elementId = $"date-{Guid.NewGuid():D}";
 
     [Parameter]
-    public DateTime Value { get; set; }
+    public DateTime? Value { get; set; }
     [Parameter]
     public AdDatepickerOptions Options { get; set; } = new AdDatepickerOptions();
     [Parameter]
@@ -26,7 +19,11 @@
     {
         if (firstRender)
         {
-            await CreateOrUpdateDatePickerAsync();
+            var initDate = Value?.ToString("O"); 
+            await js.InvokeAsync<object>(
+                "abDatepickerBlazor.init",
+                _elementId, Options, initDate, DotNetObjectReference.Create(this));
+            _initialized = true;
         }
         await base.OnAfterRenderAsync(firstRender);
     }
@@ -35,17 +32,13 @@
     {
         if (_initialized)
         {
-            await CreateOrUpdateDatePickerAsync();
+            Console.WriteLine("OnParametersSetAsync");
+            await js.InvokeAsync<object>(
+                "abDatepickerBlazor.change",
+                _elementId, Options);
         }
 
         await base.OnParametersSetAsync();
-    }
-
-    private async Task CreateOrUpdateDatePickerAsync()
-    {
-        await js.InvokeAsync<object>(
-            "abDatepickerBlazor.init",
-            _elementId, Options, DotNetObjectReference.Create(this));
     }
 
 }
