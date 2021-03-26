@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 
 namespace Blazor.AbDatePicker
 {
-    public class CustomJsonStringEnumConverter : JsonConverterFactory
+    internal class CustomJsonStringEnumConverter : JsonConverterFactory
     {
         private readonly JsonNamingPolicy namingPolicy;
         private readonly bool allowIntegerValues;
@@ -43,7 +43,7 @@ namespace Blazor.AbDatePicker
         }
     }
 
-    public class JsonNamingPolicyDecorator : JsonNamingPolicy
+    internal class JsonNamingPolicyDecorator : JsonNamingPolicy
     {
         readonly JsonNamingPolicy underlyingNamingPolicy;
 
