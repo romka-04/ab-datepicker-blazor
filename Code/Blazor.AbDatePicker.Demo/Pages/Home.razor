@@ -30,18 +30,18 @@
             <div class="form-group col-sm-6">
                 <label class="col-form-label">Themes:</label>
                 <select @bind="Options.Theme" class="form-control">
-                    @foreach (var ffe in Enum.GetValues(typeof(Theme)))
+                    @foreach (var item in Enum.GetValues(typeof(Theme)))
                     {
-                        <option value="@ffe">@ffe</option>
+                        <option value="@item">@item</option>
                     }
                 </select>              
             </div>
             <div class="form-group col-sm-6">
                 <label class="col-form-label">Start view:</label>
                 <select @bind="Options.StartView" class="form-control">
-                    @foreach (var ffe in Enum.GetValues(typeof(StartView)))
+                    @foreach (var item in Enum.GetValues(typeof(StartView)))
                     {
-                        <option value="@ffe">@ffe</option>
+                        <option value="@item">@item</option>
                     }
                 </select>              
             </div>
@@ -54,22 +54,37 @@
             <div class="form-group col-sm-6">
                 <label class="col-form-label">First day of week:</label>
                 <select @bind="Options.FirstDayOfWeek" class="form-control">
-                    @foreach (var ffe in Enum.GetValues(typeof(DayOfWeek)))
+                    @foreach (var item in Enum.GetValues(typeof(DayOfWeek)))
                     {
-                        <option value="@ffe">@ffe</option>
+                        <option value="@item">@item</option>
                     }
                 </select>
             </div>
             <div class="form-group col-sm-6">
-                <label class="col-form-label">
-                    Days of week disabled:
-                    @*<select @bind="Options.DisabledDayOfWeek" class="form-control">
-                        @foreach (var ffe in Enum.GetValues(typeof(DayOfWeek)))
-                        {
-                            <option value="@ffe">@ffe</option>
-                        }
-                    </select>*@
-                </label>
+                <label class="col-form-label">Days of week disabled:</label>
+                <SelectMultiple @bind-Value="Options.DisabledDayOfWeek" Multiple="true" Title="Select From Fruits..." ClassNames="form-control"
+                                 ChangeType="(object obj) => (DayOfWeek)Enum.Parse(typeof(DayOfWeek), obj.ToString())">
+                    @foreach (DayOfWeek item in Enum.GetValues(typeof(DayOfWeek)).Cast<DayOfWeek>())
+                    {
+                        <option value="@item.ToString("G")">@item.ToString("G")</option>
+                    }
+                </SelectMultiple>
+                <br/>
+                <button class="btn" @onclick="OnTest">Test</button>
+                @*<label>Selected</label>
+                <code>@(string.Join("; ", fruits.ToString()))</code>*@
+                @*<select @bind="test" class="form-control" title="Days of week disabled" multiple size="3" @onchange="SelectionChanged" >
+                    @foreach (var item in Enum.GetValues(typeof(DayOfWeek)).Cast<DayOfWeek>())
+                    {
+                        <option value="@((byte)item)">@(item.ToString("G"))</option>
+                    }
+                </select>*@
+                @*<select @bind="Options.DisabledDayOfWeek" class="form-control">
+            @foreach (var ffe in Enum.GetValues(typeof(DayOfWeek)))
+            {
+                <option value="@ffe">@ffe</option>
+            }
+        </select>*@
             </div>
         </div>
         <hr/>
@@ -88,5 +103,8 @@
     private DateTime? Date { get; set; } = DateTime.Now.Date.AddDays(-7);
     private AdDatepickerOptions Options { get; set; } = new AdDatepickerOptions();
 
-
+    private void OnTest()
+    {
+        Console.WriteLine(string.Join("; ", Options.DisabledDayOfWeek.Select(x => x.ToString("G"))));
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
@@ -10,7 +11,7 @@ namespace Blazor.AbDatePicker
         public StartView StartView { get; set; }
         public WeekDayFormat WeekDayFormat { get; set; }
         public DayOfWeek FirstDayOfWeek { get; set; }
-        public DayOfWeek[] DisabledDayOfWeek { get; set; }
+        public List<DayOfWeek> DisabledDayOfWeek { get; set; } = new List<DayOfWeek>();
         public string InputFormats { get; set; } = "dd-MM-yyyy";
         public string OutputFormat { get; set; } = "dd-MM-yyyy";
         public DateTime? MinDate { get; set; }
@@ -62,6 +63,5 @@ namespace Blazor.AbDatePicker
         Thursday = 4,
         Friday = 5,
         Saturday = 6,
-        Default = Sunday
     }
 }

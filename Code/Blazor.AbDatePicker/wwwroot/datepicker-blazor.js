@@ -19,7 +19,7 @@ window.abDatepickerBlazor = {
             var oldVal = currDate;
             var newVal = $elem.datepicker('getDate');
 
-            // solve issues with time zone shift
+            // solves issues with time zone shift
             var userTimezoneOffset = oldVal.getTimezoneOffset() * 60000;
             oldVal = new Date(oldVal.getTime() - userTimezoneOffset);
 
@@ -42,6 +42,10 @@ window.abDatepickerBlazor = {
         }
         console.log('settings-change', settings);
 
-        $(elem).datepicker('theme', settings.theme);
+        var $elem = $(elem);
+        $elem.datepicker('theme', settings.theme);
+        $elem.datepicker('firstDayOfWeek', settings.firstDayOfWeek);
+        $elem.datepicker('daysOfWeekDisabled', settings.disabledDayOfWeek);
+
     }
 }
