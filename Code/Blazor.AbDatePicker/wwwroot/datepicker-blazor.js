@@ -44,15 +44,33 @@ window.abDatepickerBlazor = {
 
         var $elem = $(elem);
         $elem.datepicker('theme', settings.theme);
+        $elem.datepicker('startview', settings.startView);
+        $elem.datepicker('weekDayFormat', settings.weekDayFormat);
         $elem.datepicker('firstDayOfWeek', settings.firstDayOfWeek);
         $elem.datepicker('daysOfWeekDisabled', settings.disabledDayOfWeek);
         $elem.datepicker('outputFormat', settings.outputFormat);
-        if (settings.minValue) {
-            var min = /^\d{4}-\d{1,2}-\d{1,2}/.test($(this).val())
-                ? $('#date').datepicker('format', new Date($(this).val()))
+        if (settings.minDate) {
+            var min = /^\d{4}-\d{1,2}-\d{1,2}/.test(settings.minDate)
+                ? $elem.datepicker('format', new Date(settings.minDate))
                 : settings.minDate;
-            console.log('min', min);
             $elem.datepicker('min', min);
+        }
+        if (settings.maxDate) {
+            var max = /^\d{4}-\d{1,2}-\d{1,2}/.test(settings.maxDate)
+                ? $elem.datepicker('format', new Date(settings.maxDate))
+                : settings.maxDate;
+            $elem.datepicker('max', max);
+        }
+        if (settings.modal) {
+            $elem.datepicker('modal', settings.modal);
+        }
+        if (settings.inline) {
+            $elem.datepicker('inline', settings.inline);
+        } else {
+            $elem.datepicker('inline', false);
+        }
+        if (settings.disable) {
+            $elem.datepicker('disable', settings.disable);
         }
 
     }
