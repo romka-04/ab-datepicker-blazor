@@ -1,12 +1,11 @@
 ﻿window.dropdown = {
-    custom_select: function (id, values, multiple) {
+    custom_select: function(id, values, multiple) {
 
         if (values != undefined) {
             if (multiple) {
                 if (Array.isArray(values)) {
                     var selectValues = values;
-                }
-                else {
+                } else {
                     var selectValues = values.split(',');
                 }
 
@@ -31,13 +30,12 @@
                     //});
 
                 }
-            }
-            else {
+            } else {
                 document.getElementById(id).value = values;
             }
         }
     },
-    getSelectValues: function (select) {
+    getSelectValues: function(select) {
         var result = [];
         var options = select && select.options;
         var opt;
@@ -51,8 +49,15 @@
         }
         return result;
     },
-    onOptionSelect: function (dotNetObject, selectId) {
+    onOptionSelect: function(dotNetObject, selectId) {
         var values = dropdown.getSelectValues(document.getElementById(selectId));
         dotNetObject.invokeMethodAsync('OnOptionSelect', selectId, values);
     },
-}
+};
+
+window.highlightSnippet = function () {
+    hljs.registerLanguage('cshtml-razor', window.hljsDefineCshtmlRazor);
+    document.querySelectorAll('pre code').forEach((el) => {
+        hljs.highlightBlock(el);
+    });
+} 

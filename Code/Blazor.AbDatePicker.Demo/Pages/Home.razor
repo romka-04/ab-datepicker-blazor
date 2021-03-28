@@ -2,40 +2,60 @@
 @using System.Text.Json
 @using DayOfWeek = Blazor.AbDatePicker.DayOfWeek
 
-<br/>
+<br />
 <div class="row">
     <div class="col-md-6">
         <h3>Datepicker</h3>
         <br/>
         <div class="row">
-            <div class="form-group ">
-                <label class="col-form-label">
-                    Date (English - United Kingdom):
-                </label>
+            <div class="form-group col-sm-10">
+                <label class="col-form-label">Date:</label>
                 <AbDatepicker @bind-Value="SampleDate" Options="Options"></AbDatepicker>
                 <div id="date-inline"></div>
             </div>
         </div>
         <div class="row">
-            <div class="form-group ">
+            <div class="form-group col-sm-10">
                 <label class="col-form-label">Selected Date:</label>
                 <span class="alert alert-success">@SampleDate.Value.ToShortDateString()</span>
             </div>
         </div>
         <div class="row">
-            <div class="form-group ">
+            <div class="form-group col-sm-12">
                 <label class="col-form-label">Scripts:</label>
-                <pre id="date-precode" class="col-xs-12">&lt;input class="form-control" id="date" type="text" placeholder="<span class="inputFormat"></span>" title="format : <span class="inputFormat"></span>"/&gt;
-......						
-&lt;script type="text/javascript" src="js/locales/<span class="language">en</span>.min.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript" src="js/datepicker.min.js"&gt;&lt;/script&gt;
-							</pre>
+                <CodeSnippet Language="cshtml-razor">&lt;link rel=&quot;stylesheet&quot; href=&quot;_content/Blazor.AbDatePicker/css/datepicker.css&quot; type=&quot;text/css&quot;/&gt;
+&lt;script src=&quot;_content/Blazor.AbDatePicker/datepicker-blazor.min.js&quot;&gt;&lt;/script&gt;
+
+
+&lt;AbDatepicker @@bind-Value=&quot;SampleDate&quot; Options=&quot;_options&quot;&gt;&lt;/AbDatepicker&gt;
+
+@@code {
+private DateTime? SampleDate { get; set; } = DateTime.Now.Date.AddDays(-7);
+
+private AdDatepickerOptions _options = new AdDatepickerOptions
+{
+// customize options here
+};
+}
+                </CodeSnippet>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-8">
+                <label class="col-form-label">Locales:</label>
+                <Locales @bind-Value="_locale"></Locales>
+                <code>@_locale</code>
+            </div>
+            <div class="form-group col-sm-12">
+                <CodeSnippet Language="cshtml-razor">&lt;!--Specify this when you need other then 'en' locale.--&gt;
+                    &lt;script src=&quot;_content/Blazor.AbDatePicker/locales/@(_locale).js&quot;&gt;&lt;/script&gt;
+                </CodeSnippet>
             </div>
         </div>
     </div>
     <div class="col-md-6">
         <h3>Options</h3>
-        <br/>
+        <br />
         <div class="row">
             <div class="form-group col-sm-6">
                 <label class="col-form-label">Themes:</label>
@@ -134,11 +154,11 @@
                 <label class="form-check-label" for="date-options-disable-label">Disable</label>
             </div>
         </div>
-        <hr/>
+        <hr />
         <div class="form-group col-sm-8">
             <label class="col-form-label">Json:</label>
             <code>
-                @JsonSerializer.Serialize(Options, new JsonSerializerOptions{ PropertyNamingPolicy = JsonNamingPolicy.CamelCase, })
+                @JsonSerializer.Serialize(Options, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, })
             </code>
         </div>
     </div>
@@ -149,6 +169,8 @@
 
     private DateTime? SampleDate { get; set; } = DateTime.Now.Date.AddDays(-7);
     private AdDatepickerOptions Options { get; set; } = new AdDatepickerOptions();
+
+    private string _locale = "en";
 
     private void OnTest()
     {
@@ -167,7 +189,7 @@
     {
         if (bool.TryParse(args.Value?.ToString(), out bool res) && res)
         {
-           Options.Inline = "date-inline";
+            Options.Inline = "date-inline";
         }
         else
         {
