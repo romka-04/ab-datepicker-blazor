@@ -46,6 +46,14 @@ window.abDatepickerBlazor = {
         $elem.datepicker('theme', settings.theme);
         $elem.datepicker('firstDayOfWeek', settings.firstDayOfWeek);
         $elem.datepicker('daysOfWeekDisabled', settings.disabledDayOfWeek);
+        $elem.datepicker('outputFormat', settings.outputFormat);
+        if (settings.minValue) {
+            var min = /^\d{4}-\d{1,2}-\d{1,2}/.test($(this).val())
+                ? $('#date').datepicker('format', new Date($(this).val()))
+                : settings.minDate;
+            console.log('min', min);
+            $elem.datepicker('min', min);
+        }
 
     }
 }

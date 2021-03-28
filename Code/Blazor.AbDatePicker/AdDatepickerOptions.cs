@@ -12,7 +12,7 @@ namespace Blazor.AbDatePicker
         public WeekDayFormat WeekDayFormat { get; set; }
         public DayOfWeek FirstDayOfWeek { get; set; }
         public List<DayOfWeek> DisabledDayOfWeek { get; set; } = new List<DayOfWeek>();
-        public string InputFormats { get; set; } = "dd-MM-yyyy";
+        public List<string> InputFormats { get; set; } = new() {"dd-MM-yyyy"};
         public string OutputFormat { get; set; } = "dd-MM-yyyy";
         public DateTime? MinDate { get; set; }
         public DateTime? MaxDate { get; set; }

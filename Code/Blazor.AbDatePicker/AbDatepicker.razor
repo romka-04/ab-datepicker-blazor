@@ -1,7 +1,7 @@
 ﻿@using Microsoft.JSInterop
 @inject IJSRuntime js
 
-<input class="form-control" id="@_elementId" type="text" placeholder="@Options.InputFormats" />
+<input class="form-control" id="@_elementId" type="text" placeholder="@string.Join("; ", Options.InputFormats)" />
 
 @code {
     readonly string _elementId = $"date-{Guid.NewGuid():D}";

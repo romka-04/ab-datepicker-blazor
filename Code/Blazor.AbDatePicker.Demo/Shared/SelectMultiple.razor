@@ -1,5 +1,4 @@
-﻿@using System.Diagnostics
-@typeparam TItem
+﻿@typeparam TItem
 @inject IJSRuntime jsRuntime
 
 <select id="@_uniqueId" class="@ClassNames" multiple="@Multiple" size="@Size" title="@Title" @onchange="OnChange">
@@ -73,7 +72,7 @@
     }
 
     [JSInvokable]
-    public async Task<bool> OnOptionSelect(string selectId, List<object> selectedValues)
+    public async Task<bool> OnOptionSelect(string selectId, List<string> selectedValues)
     {
         try
         {
@@ -84,7 +83,7 @@
             }
             else
             {
-                Value = new List<TItem>(selectedValues.Select(ConvertByType<TItem>));
+                Value = new List<TItem>(selectedValues.Select(ChangeType));
             }
 
             await ValueChanged.InvokeAsync(Value);
