@@ -4,7 +4,7 @@
 
 <br/>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <h3>Datepicker</h3>
         <br/>
         <div class="row">
@@ -15,16 +15,25 @@
                 <AbDatepicker @bind-Value="SampleDate" Options="Options"></AbDatepicker>
                 <div id="date-inline"></div>
             </div>
+        </div>
+        <div class="row">
             <div class="form-group ">
-                <label class="col-form-label">
-                    Selected Date:
-                    <span class="alert alert-success">@SampleDate.Value.ToShortDateString()</span>
-                </label>
+                <label class="col-form-label">Selected Date:</label>
+                <span class="alert alert-success">@SampleDate.Value.ToShortDateString()</span>
             </div>
         </div>
-        <br/>
+        <div class="row">
+            <div class="form-group ">
+                <label class="col-form-label">Scripts:</label>
+                <pre id="date-precode" class="col-xs-12">&lt;input class="form-control" id="date" type="text" placeholder="<span class="inputFormat"></span>" title="format : <span class="inputFormat"></span>"/&gt;
+......						
+&lt;script type="text/javascript" src="js/locales/<span class="language">en</span>.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="js/datepicker.min.js"&gt;&lt;/script&gt;
+							</pre>
+            </div>
+        </div>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-6">
         <h3>Options</h3>
         <br/>
         <div class="row">
