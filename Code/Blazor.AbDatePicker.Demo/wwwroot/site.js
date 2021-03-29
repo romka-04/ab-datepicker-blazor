@@ -55,9 +55,21 @@
     },
 };
 
-window.highlightSnippet = function () {
-    hljs.registerLanguage('cshtml-razor', window.hljsDefineCshtmlRazor);
-    document.querySelectorAll('pre code').forEach((el) => {
-        hljs.highlightBlock(el);
-    });
+window.highlightSnippet = {
+    init: function() {
+        hljs.registerLanguage('cshtml-razor', window.hljsDefineCshtmlRazor);
+        document.querySelectorAll('pre code').forEach((el) => {
+            hljs.highlightElement(el);
+        });
+    },
+    change: function (elementId) {
+        //var elem = document.getElementById(elementId);
+        //if (!elem) {
+        //    throw new Error('No element with ID ' + elementId);
+        //}
+        //elem.querySelectorAll('pre code').forEach((el) => {
+        //    console.info('elem', el);
+        //    hljs.highlightElement(el);
+        //});
+    }
 } 

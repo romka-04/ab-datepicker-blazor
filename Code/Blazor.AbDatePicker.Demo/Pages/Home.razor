@@ -26,16 +26,15 @@
                 <CodeSnippet Language="cshtml-razor">&lt;link rel=&quot;stylesheet&quot; href=&quot;_content/Blazor.AbDatePicker/css/datepicker.css&quot; type=&quot;text/css&quot;/&gt;
 &lt;script src=&quot;_content/Blazor.AbDatePicker/datepicker-blazor.min.js&quot;&gt;&lt;/script&gt;
 
-
 &lt;AbDatepicker @@bind-Value=&quot;SampleDate&quot; Options=&quot;_options&quot;&gt;&lt;/AbDatepicker&gt;
 
 @@code {
-private DateTime? SampleDate { get; set; } = DateTime.Now.Date.AddDays(-7);
+    private DateTime? SampleDate { get; set; } = DateTime.Now.Date.AddDays(-7);
 
-private AdDatepickerOptions _options = new AdDatepickerOptions
-{
-// customize options here
-};
+    private AdDatepickerOptions _options = new AdDatepickerOptions
+    {
+    // customize options here
+    };
 }
                 </CodeSnippet>
             </div>
@@ -48,7 +47,7 @@ private AdDatepickerOptions _options = new AdDatepickerOptions
             </div>
             <div class="form-group col-sm-12">
                 <CodeSnippet Language="cshtml-razor">&lt;!--Specify this when you need other then 'en' locale.--&gt;
-                    &lt;script src=&quot;_content/Blazor.AbDatePicker/locales/@(_locale).js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;_content/Blazor.AbDatePicker/locales/@(_locale).js&quot;&gt;&lt;/script&gt;
                 </CodeSnippet>
             </div>
         </div>
