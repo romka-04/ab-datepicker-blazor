@@ -4,7 +4,9 @@
 <input class="form-control" id="@_elementId" type="text" placeholder="@string.Join("; ", Options.InputFormats)" />
 
 @code {
-    readonly string _elementId = $"date-{Guid.NewGuid():D}";
+    readonly string _elementId = $"date-{Guid.NewGuid():N}";
+
+    public string ElementId => _elementId;
 
     [Parameter]
     public DateTime? Value { get; set; }
@@ -12,8 +14,31 @@
     public AdDatepickerOptions Options { get; set; } = new AdDatepickerOptions();
     [Parameter]
     public EventCallback<DateTime?> ValueChanged { get; set; }
+    /// <summary>
+    /// Link the target input of the datepicker to the input of another datepicker that represents the end date of a range.
+    /// </summary>
+    [Parameter]
+    public AbDatepickerForwardRef Next { get; set; }
+    /// <summary>
+    /// Link the target input of the datepicker to the input of another datepicker that represents the start date of a range.
+    /// </summary>
+    [Parameter]
+    public AbDatepickerForwardRef Previous { get; set; }
 
     private bool _initialized = false;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Console.WriteLine("OnParametersSetAsync");
+        if (_initialized)
+        {
+            await js.InvokeAsync<object>(
+                "abDatepickerBlazor.change",
+                _elementId, Options);
+        }
+
+        await base.OnParametersSetAsync();
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -22,23 +47,10 @@
             var initDate = Value?.ToString("O");
             await js.InvokeAsync<object>(
                 "abDatepickerBlazor.init",
-                _elementId, Options, initDate, DotNetObjectReference.Create(this));
+                _elementId, Options, initDate, Next?.ElementId, Previous?.ElementId, DotNetObjectReference.Create(this));
             _initialized = true;
         }
         await base.OnAfterRenderAsync(firstRender);
-    }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        if (_initialized)
-        {
-            Console.WriteLine("OnParametersSetAsync");
-            await js.InvokeAsync<object>(
-                "abDatepickerBlazor.change",
-                _elementId, Options);
-        }
-
-        await base.OnParametersSetAsync();
     }
 
     [JSInvokable]

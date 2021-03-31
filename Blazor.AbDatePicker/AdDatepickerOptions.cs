@@ -35,14 +35,17 @@ namespace Blazor.AbDatePicker
         /// Disable the datepicker. This method has no effect on an inline datepicker.
         /// </summary>
         public bool Disable { get; set; }
-        public string Markup { get; } = "bootstrap4";
+        /// <summary>
+        /// The html markup to use. This prop also accepts 'bootstrap3'.
+        /// </summary>
+        public string Markup { get; set; } = "bootstrap4";
 
         public void SetInlineDefault()
         {
             this.Inline = null;
         }
     }
-
+    
     [JsonConverter(typeof(CustomJsonStringEnumConverter))]
     public enum Theme
     {
