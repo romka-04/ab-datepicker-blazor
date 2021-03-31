@@ -29,7 +29,6 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        Console.WriteLine("OnParametersSetAsync");
         if (_initialized)
         {
             await js.InvokeAsync<object>(
