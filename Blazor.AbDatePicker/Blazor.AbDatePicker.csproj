@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.1.0-beta</Version>
-    <FileVersion>1.1.0.3</FileVersion>
+    <Version>1.1.0-rc1</Version>
+    <FileVersion>1.1.0.4</FileVersion>
     <PackageLicenseFile>README.md</PackageLicenseFile>
   </PropertyGroup>
 

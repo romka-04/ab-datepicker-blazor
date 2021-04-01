@@ -26,16 +26,20 @@ window.abDatepickerBlazor = {
             var newVal = $elem.datepicker('getDate');
 
             // solves issues with time zone shift
-            var userTimezoneOffset = oldVal.getTimezoneOffset() * 60000;
-            oldVal = new Date(oldVal.getTime() - userTimezoneOffset);
-
-            userTimezoneOffset = newVal.getTimezoneOffset() * 60000;
-            newVal = new Date(newVal.getTime() - userTimezoneOffset);
+            var userTimezoneOffset;
+            if (oldVal) {
+                userTimezoneOffset = oldVal.getTimezoneOffset() * 60000;
+                oldVal = new Date(oldVal.getTime() - userTimezoneOffset);
+            }
+            if (newVal) {
+                userTimezoneOffset = newVal.getTimezoneOffset() * 60000;
+                newVal = new Date(newVal.getTime() - userTimezoneOffset);
+            }
 
             // send data to Blazor component
             dotnetHelper.invokeMethodAsync('OnChangeAsync',
-                oldVal.toJSON(),
-                newVal.toJSON()
+                (oldVal) ? oldVal.toJSON() : null,
+                (newVal) ? newVal.toJSON() : null
             );
 
             currDate = newVal;
