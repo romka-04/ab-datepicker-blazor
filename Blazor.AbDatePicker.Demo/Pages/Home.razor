@@ -17,25 +17,25 @@
         <div class="row">
             <div class="form-group col-sm-10">
                 <label class="col-form-label">Selected Date:</label>
-                <span class="alert alert-success">@SampleDate.Value.ToShortDateString()</span>
+                <span class="alert alert-success">@(SampleDate.HasValue ? SampleDate.Value.ToShortDateString() : "none")</span>
             </div>
         </div>
         <div class="row">
             <div class="form-group col-sm-12">
                 <label class="col-form-label">Scripts:</label>
                 <CodeSnippet Language="cshtml-razor">&lt;link rel=&quot;stylesheet&quot; href=&quot;_content/Blazor.AbDatePicker/css/datepicker.css&quot; type=&quot;text/css&quot;/&gt;
-&lt;script src=&quot;_content/Blazor.AbDatePicker/datepicker-blazor.min.js&quot;&gt;&lt;/script&gt;
+                    &lt;script src=&quot;_content/Blazor.AbDatePicker/datepicker-blazor.min.js&quot;&gt;&lt;/script&gt;
 
-&lt;AbDatepicker @@bind-Value=&quot;SampleDate&quot; Options=&quot;_options&quot;&gt;&lt;/AbDatepicker&gt;
+                    &lt;AbDatepicker @@bind-Value=&quot;SampleDate&quot; Options=&quot;_options&quot;&gt;&lt;/AbDatepicker&gt;
 
-@@code {
-    private DateTime? SampleDate { get; set; } = DateTime.Now.Date.AddDays(-7);
+                    @@code {
+                    private DateTime? SampleDate { get; set; } = DateTime.Now.Date.AddDays(-7);
 
-    private AdDatepickerOptions _options = new AdDatepickerOptions
-    {
-    // customize options here
-    };
-}
+                    private AdDatepickerOptions _options = new AdDatepickerOptions
+                    {
+                    // customize options here
+                    };
+                    }
                 </CodeSnippet>
             </div>
         </div>
@@ -163,18 +163,34 @@
     </div>
 
 </div>
+<h3>Linked datepickers</h3>
+<div class="row">
+    <div class="form-group col-sm-8">
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <label class="col-form-label">Start date:</label>
+                <AbDatepicker @ref="@_startDatepicker.Current" Value="StartDate" Options="Options" Next="_endDatepicker" />
+                <small class="form-text text-muted">The date in 'Start Date' must be before or equal to the date in 'End Date'.</small>
+            </div>
+            <div class="form-group col-sm-6">
+                <label class="col-form-label">End date:</label>
+                <AbDatepicker @ref="@_endDatepicker.Current" Value="EndDate" Options="Options" Previous="_startDatepicker" />
+                <small class="form-text text-muted"> The date in 'End Date' must be after or equal to the date in 'Start Date'.</small>
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
 
     private DateTime? SampleDate { get; set; } = DateTime.Now.Date.AddDays(-7);
     private AdDatepickerOptions Options { get; set; } = new AdDatepickerOptions();
+    private DateTime? StartDate { get; set; } = DateTime.Now.Date.AddDays(-5);
+    private DateTime? EndDate { get; set; } = DateTime.Now.Date.AddDays(-3);
+    private readonly AbDatepickerForwardRef _startDatepicker = new AbDatepickerForwardRef();
+    private readonly AbDatepickerForwardRef _endDatepicker = new AbDatepickerForwardRef();
 
     private string _locale = "en";
-
-    private void OnTest()
-    {
-        Console.WriteLine(string.Join("; ", Options.DisabledDayOfWeek.Select(x => x.ToString("G"))));
-    }
 
     private void WeekDayFormatChanged(ChangeEventArgs args)
     {

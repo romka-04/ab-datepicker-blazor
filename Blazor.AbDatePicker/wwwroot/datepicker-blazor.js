@@ -1,10 +1,16 @@
 window.abDatepickerBlazor = {
-    init: function (elementId, settings, date, dotnetHelper) {
+    init: function (elementId, settings, date, next, previous, dotnetHelper) {
         var elem = document.getElementById(elementId);
         if (!elem) {
             throw new Error('No element with ID ' + elementId);
         }
-        console.log('settings-init', settings);
+
+        // in order to implement 'Linked Datepicker' (in other words date range picker)
+        // it's required to populate fields 'Next' and 'Previous' which should contain ID of corresponding HTML element
+        if (next) Object.assign(settings, { 'next': '#' + next });
+        if (previous) Object.assign(settings, { 'previous': '#' + previous });
+
+        //console.log('settings', settings);
 
         var $elem = $(elem);
         $elem.datepicker(settings);
@@ -20,16 +26,20 @@ window.abDatepickerBlazor = {
             var newVal = $elem.datepicker('getDate');
 
             // solves issues with time zone shift
-            var userTimezoneOffset = oldVal.getTimezoneOffset() * 60000;
-            oldVal = new Date(oldVal.getTime() - userTimezoneOffset);
-
-            userTimezoneOffset = newVal.getTimezoneOffset() * 60000;
-            newVal = new Date(newVal.getTime() - userTimezoneOffset);
+            var userTimezoneOffset;
+            if (oldVal) {
+                userTimezoneOffset = oldVal.getTimezoneOffset() * 60000;
+                oldVal = new Date(oldVal.getTime() - userTimezoneOffset);
+            }
+            if (newVal) {
+                userTimezoneOffset = newVal.getTimezoneOffset() * 60000;
+                newVal = new Date(newVal.getTime() - userTimezoneOffset);
+            }
 
             // send data to Blazor component
             dotnetHelper.invokeMethodAsync('OnChangeAsync',
-                oldVal.toJSON(),
-                newVal.toJSON()
+                (oldVal) ? oldVal.toJSON() : null,
+                (newVal) ? newVal.toJSON() : null
             );
 
             currDate = newVal;
@@ -40,7 +50,6 @@ window.abDatepickerBlazor = {
         if (!elem) {
             throw new Error('No element with ID ' + elementId);
         }
-        console.log('settings-change', settings);
 
         var $elem = $(elem);
         $elem.datepicker('theme', settings.theme);

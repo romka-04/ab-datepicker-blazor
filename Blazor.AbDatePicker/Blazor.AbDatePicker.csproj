@@ -3,8 +3,9 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.0-rc1</Version>
-    <FileVersion>1.0.0.1</FileVersion>
+    <Version>1.1.0-rc1</Version>
+    <FileVersion>1.1.0.4</FileVersion>
+    <PackageLicenseFile>README.md</PackageLicenseFile>
   </PropertyGroup>
 
   
@@ -15,6 +16,13 @@
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
