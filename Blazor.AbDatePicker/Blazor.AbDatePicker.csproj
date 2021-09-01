@@ -3,9 +3,10 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.1.0-rc1</Version>
-    <FileVersion>1.1.0.4</FileVersion>
+    <Version>1.1.0</Version>
+    <FileVersion>1.1.0.5</FileVersion>
     <PackageLicenseFile>README.md</PackageLicenseFile>
+    <PackageReleaseNotes>fix minor issue when input datetime value was null</PackageReleaseNotes>
   </PropertyGroup>
 
   
